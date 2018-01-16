@@ -1,10 +1,4 @@
-﻿;====================================
-; 蓝蓝小雪 作品
-; http://wwww.snow518.cn/
-; 修改自：http://ahk.5d6d.com/thread-701-1-3.html
-; 增加了快捷键、编辑、重载某个单独的脚本
-;====================================
-#Persistent
+﻿#Persistent
 #SingleInstance force
 Menu, Tray, Icon, %A_ScriptDir%\resources\ahk.ico
 SetWorkingDir %A_ScriptDir%\scripts\
@@ -71,8 +65,8 @@ Menu, Tray, Add
 Menu, Tray, Add, 启动所有脚本, tsk_openAll
 Menu, Tray, Add, 关闭所有脚本, tsk_closeAll
 Menu, Tray, Add
-Menu, Tray, Add, 添加新脚本, Menu_Tray_OpenDir
-Menu, Tray, Add, 我添加了新脚本, Menu_Tray_Reload
+Menu, Tray, Add, 打开脚本文件夹, Menu_Tray_OpenDir
+Menu, Tray, Add, 添加了新脚本, Menu_Tray_Reload
 Menu, Tray, Add
 Menu, Tray, Add, 退出, Menu_Tray_Exit
 Menu, Tray, NoStandard
@@ -188,10 +182,20 @@ Menu_Tray_OpenDir:
 Return
 
 Menu_Tray_Exit:
-MsgBox, 49, 脚本管理器, 你确定要退出脚本管理器吗？`n退出管理器并不能关闭已经打开的脚本。`n`n单击“确定”退出脚本管理器`n单击“取消”忽略本操作
-IfMsgBox,yes
-	ExitApp
-IfMsgBox,cancel
+Loop, %scriptCount%
+{
+    thisScript := scripts%A_index%0
+    If scripts%A_index%1 = 1  ; 已打开
+    {
+        WinClose %thisScript% - AutoHotkey
+        scripts%A_index%1 = 0
+
+        StringRePlace menuName, thisScript, .ahk
+        Menu scripts_unopen, add, %menuName%, tsk_open
+        Menu scripts_unclose, delete, %menuName%
+    }
+}
+ExitApp
 Return
 
 ExitSub:
