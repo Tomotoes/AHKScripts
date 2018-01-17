@@ -158,7 +158,7 @@ keyFunc_enterWherever(){
 
 
 keyFunc_enter(){
-SendInput, {Enter}
+SendInput, {End}{Enter}
 Return
 }
 
@@ -460,9 +460,9 @@ keyFunc_qbar(){
     SetTimer, setCLqActive, 50
     ;先关闭所有Caps热键，然后再打开
     ;防止其他功能在 qbar 出来这段时间因为输入文字而被触发
-    CapsLock:=CapsLock2:=""
+    Space:=CapsLock2:=""
     CLq()
-    CapsLock:=1
+    Space:=1
     return
 
     setCLqActive:

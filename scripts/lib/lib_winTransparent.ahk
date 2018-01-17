@@ -61,7 +61,7 @@ return
 
 
 winTranspKeyCheck:
-if(!GetKeyState("f4", "P") || !Capslock){
+if(!GetKeyState("f4", "P") || !Space){
     setTimer, checkIfTranspToggle, off ; 关闭短按切换透明度
     setTimer, winTranspKeyCheck, off
     

@@ -155,7 +155,7 @@ activateSideWin(UDLR){
 
 
 winJumpActivate:
-if(!GetKeyState("LAlt", "P") || !Capslock)
+if(!GetKeyState("LAlt", "P") || !Space)
 {
     ; clean
     destroyWinJumpCover()
@@ -210,7 +210,7 @@ winJumpIgnore(){
 }
 
 cleanWinJumpIgnore:
-if(!GetKeyState("LAlt", "P") || !Capslock)
+if(!GetKeyState("LAlt", "P") || !Space)
 {
     ; clean
     winJumpIgnoreCount:=0

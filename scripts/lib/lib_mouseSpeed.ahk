@@ -31,7 +31,7 @@ changeMouseSpeed:
         settimer, changeMouseSpeed, off
     }
     ;如果Capslock松开
-    if(!Capslock)
+    if(!Space)
     {
         settimer, changeMouseSpeed, off
     }
@@ -39,12 +39,12 @@ changeMouseSpeed:
 }
 
 stopChangeMouseSpeed:
-if(!GetKeyState("LAlt", "P") || !Capslock)
+if(!GetKeyState("LAlt", "P") || !Space)
 {
     settimer, stopChangeMouseSpeed, off
     ;  sendinput, aaa%OrigMouseSpeed%
     DllCall("SystemParametersInfo", UInt, 0x71, UInt, 0, Ptr, OrigMouseSpeed, UInt, 0)  ; 恢复原来的速度.
-    if(Capslock)   ;如果放开alt的时候caps还没放开，就再回去changeMouseSpeed继续监视Alt有没再次按下
+    if(Space)   ;如果放开alt的时候caps还没放开，就再回去changeMouseSpeed继续监视Alt有没再次按下
     {
         settimer, changeMouseSpeed, 50
     }

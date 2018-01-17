@@ -51,7 +51,7 @@ Gui, Cancel
 return
 
 ;-----------------------in calculator GUI start-------------
-#if WinActive("Math Board") && GetKeyState("CapsLock","T")
+#if WinActive("Math Board") && GetKeyState("Space","T")
 u::sendinput, {7}
 i::sendinput, {8}
 o::sendinput, {9}

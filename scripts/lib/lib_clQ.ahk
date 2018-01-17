@@ -133,7 +133,7 @@ for key,value in CLSets.QSearch
 
 return
 
-#If WinActive("ahk_id" . GuiHwnd)&&CapsLock
+#If WinActive("ahk_id" . GuiHwnd)&&Space
 ;  d::
 ;  ControlFocus, , ahk_id %LV_show_Hwnd%
 ;  SendInput, {Down}
