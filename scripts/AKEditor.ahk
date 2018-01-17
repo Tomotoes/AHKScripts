@@ -11,52 +11,87 @@ setTimer, youdaoApiInit, -1
 #NoEnv
 Process Priority,,High
 SetCapsLockState, AlwaysOff  
-CapsLock & s::
+CapsLock & j::
 MouseMove, -15, 0, 0, R                                               
 return  
-CapsLock & d::                                                       
+CapsLock & k::                                                       
 MouseMove, 0, 15, 0, R                                                
 return                                                               
-CapsLock & e::                                                       
+CapsLock & i::                                                       
 MouseMove, 0, -15, 0, R                                                  
 return                                                               
-CapsLock & f::                                                       
+CapsLock & l::                                                       
 MouseMove, 15, 0, 0, R                                              
 return  
-CapsLock & W::                                                       
+CapsLock & u::                                                       
 SendEvent {Blind}{LButton down}                                      
 KeyWait Enter                                                        
 SendEvent {Blind}{LButton up}                                                
 return 
-CapsLock & R::                                                       
+CapsLock & o::                                                       
 SendEvent {Blind}{RButton down}                                      
 KeyWait Enter                                                        
 SendEvent {Blind}{RButton up}                                                
 return
-CapsLock & a:: 
+CapsLock & h:: 
 SendEvent {Blind}{WheelUp}
 return        
-CapsLock & g::
+CapsLock & `;::
 SendEvent {Blind}{WheelDown}
 return 
 
-Space::
-onlySpace:=true
-return
-Space Up::
-if(onlySpace=true){
-    Send {Space}
-}
-return
-Space & F5::
+CapsLock & F5::
 Reload
-onlySpace:=false
 return
-Space & tab::
-keyFunc_translate()
-onlySpace:=false
-return
-Space & CapsLock::
+CapsLock & alt::
 Send {Esc}
-onlySpace:=false
+return
+CapsLock & tab::
+keyFunc_translate()
+return
+
+; 左右删除
+CapsLock & w::
+Send {BS}
+return
+CapsLock & r::
+Send {Delete}
+return
+
+; 指针移动
+CapsLock & e::
+Send {Up}
+return
+CapsLock & d::
+Send {Down}
+return
+CapsLock & s::
+Send {Left}
+return
+CapsLock & f::
+Send {right}
+return
+
+; 行首行尾
+CapsLock & a::
+Send {home}
+return
+CapsLock & g::
+Send {end}
+return
+
+; 单词跳跃
+CapsLock & q::
+Send ^{left}
+return
+CapsLock & t::
+Send ^{right}
+return
+
+; 撤销重做
+CapsLock & 3::
+Send ^{z}
+return
+CapsLock & 4::
+Send ^+{z}
 return
