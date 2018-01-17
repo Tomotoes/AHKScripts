@@ -1,6 +1,101 @@
-﻿/*
-有道翻译
-*/
+﻿global lang_yd_translating:="翻译中...  （如果网络太差，翻译请求会暂时阻塞程序，稍等就好）"
+global lang_yd_name:="有道翻译"
+global lang_yd_needKey:="缺少有道翻译API的key，有道翻译无法使用"
+global lang_yd_fileNotExist:="文件（文件夹）不存在"
+global lang_yd_errorNoNet:="发送异常，可能是网络已断开"
+global lang_yd_errorTooLong:="部分句子过长"
+global lang_yd_errorNoResults:="无词典结果"
+global lang_yd_errorTextTooLong:="要翻译的文本过长"
+global lang_yd_errorCantTrans:="无法进行有效的翻译"
+global lang_yd_errorLangType:="不支持的语言类型"
+global lang_yd_errorKeyInvalid:="无效的key"
+global lang_yd_errorSpendingLimit:="已达到今日消费上限，或者请求长度超过今日可消费字符数"
+global lang_yd_errorNoFunds:="帐户余额不足"
+global lang_yd_trans:="------------------------------------有道翻译------------------------------------"
+global lang_yd_dict:="------------------------------------有道词典------------------------------------"
+global lang_yd_phrase:="--------------------------------------短语--------------------------------------"
+keyFunc_translate(){
+    global
+    selText:=getSelText()
+    if(selText)
+    { 
+        ydTranslate(selText)
+    }
+    else
+    { 
+        ClipboardOld:=ClipboardAll
+        Clipboard:=""
+        SendInput, ^{Left}^+{Right}^{insert}
+        ClipWait, 0.05
+        selText:=Clipboard
+        ydTranslate(selText)
+        Clipboard:=ClipboardOld
+    }
+    SetTimer, setTransGuiActive, -400
+    Return
+}
+;为了避免在IDE里Ctrl+C会复制一行，写个函数来获取
+getSelText_testVersion()
+{
+    ClipboardOld:=ClipboardAll
+    Clipboard:=""
+    SendInput, +{Left}^{c}+{Right}
+    ClipWait, 0.1
+    if(!ErrorLevel)
+    {
+        selText:=Clipboard
+        Clipboard:=ClipboardOld
+        ;~ MsgBox, % "@" . Asc(selText) . "@"
+        ;~ MsgBox, % StrLen(selText)
+        if(Asc(selText)!=13&&StrLen(selText)>1)
+        {
+            return SubStr(selText, 2)
+        }
+        else
+        {
+            return
+        }
+    }
+    Clipboard:=ClipboardOld
+    return
+}
+
+
+getSelText()
+{
+    ClipboardOld:=ClipboardAll
+    Clipboard:=""
+    SendInput, ^{insert}
+    ClipWait, 0.1
+    if(!ErrorLevel)
+    {
+        selText:=Clipboard
+        Clipboard:=ClipboardOld
+        StringRight, lastChar, selText, 1
+        if(Asc(lastChar)!=10) ;如果最后一个字符是换行符，就认为是在IDE那复制了整行，不要这个结果
+        {
+            return selText
+        }
+    }
+    Clipboard:=ClipboardOld
+    return
+}
+
+UTF8encode(str) ;UTF8转码
+{
+    SetFormat, integer, h
+    returnStr:=""
+    StrCap := StrPut(str, "CP65001")
+    VarSetCapacity(UTF8String, StrCap)
+    StrPut(str, &UTF8String, "CP65001")
+
+    Loop, % StrCap - 1   ;StrPut 返回的长度中包含末尾的字符串截止符，因此必须减 1。
+    {
+        returnStr .= "%"SubStr(NumGet(UTF8String, A_Index - 1, "UChar"), 3) ; 逐字节获取，去除开头的“0x”后在前面加上"%"连接起来。
+    }
+    ;~ MsgBox, % returnStr ; 显示“E4B8AD”，前面附加“0x”就变成十六进制了。
+    return returnStr
+}
 
 #Include lib_json.ahk   	;引入json解析文件
 
@@ -12,32 +107,7 @@ global youdaoApiString:=""
 ;  #Include *i youdaoApiKey.ahk
 global youdaoApiKey0, youdaoApiKey1
 youdaoApiKey0=12763084
-
-if(CLSets.TTranslate.apiType=1)
-{
-	if(CLSets.TTranslate.apiKey!="")
-	{
-		key:=CLSets.TTranslate.apiKey
-		youdaoApiString=http://fanyi.youdao.com/paidapi/fanyiapi?key=%key%&type=data&doctype=json&q=
-	}
-	else if(youdaoApiKey1)
-	{
-		youdaoApiString=http://fanyi.youdao.com/paidapi/fanyiapi?key=%youdaoApiKey1%&type=data&doctype=json&q=
-	}
-}
-else
-{
-	if(CLSets.TTranslate.apiKey!="")
-	{
-		key:=CLSets.TTranslate.apiKey
-		keyFrom:=ClSets.TTranslate.keyFrom
-		youdaoApiString=http://fanyi.youdao.com/openapi.do?keyfrom=%keyFrom%&key=%key%&type=data&doctype=json&version=1.1&q=
-	}
-	else if(youdaoApiKey0)
-	{
-		youdaoApiString=http://fanyi.youdao.com/openapi.do?keyfrom=CapsLock&key=%youdaoApiKey0%&type=data&doctype=json&version=1.1&q=
-	}
-}
+youdaoApiString=http://fanyi.youdao.com/openapi.do?keyfrom=CapsLock&key=%youdaoApiKey0%&type=data&doctype=json&version=1.1&q=
 return
 
 setTransGuiActive:

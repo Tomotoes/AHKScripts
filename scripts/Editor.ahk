@@ -1,15 +1,16 @@
-#SingleInstance force
-#InstallKeybdHook
-#NoTrayIcon
-SetCapsLockState, AlwaysOff   
+﻿if not A_IsAdmin
+{
+   Run *RunAs "%A_ScriptFullPath%" 
+   ExitApp
+}
 
-CapsLock::
-if(GetKeyState("alt")){
-    Send,{Enter}
-}else{
-    Send, {ESC}
-}  
-Return
+#Include lib
+#Include lib_ydTrans.ahk  
+setTimer, youdaoApiInit, -1 
+
+#NoEnv
+Process Priority,,High
+SetCapsLockState, AlwaysOff  
 CapsLock & s::
 MouseMove, -15, 0, 0, R                                               
 return  
@@ -32,9 +33,30 @@ SendEvent {Blind}{RButton down}
 KeyWait Enter                                                        
 SendEvent {Blind}{RButton up}                                                
 return
-CapsLock & a::
+CapsLock & a:: 
 SendEvent {Blind}{WheelUp}
 return        
 CapsLock & g::
 SendEvent {Blind}{WheelDown}
 return 
+
+Space::
+onlySpace:=true
+return
+Space Up::
+if(onlySpace=true){
+    Send {Space}
+}
+return
+Space & F5::
+Reload
+onlySpace:=false
+return
+Space & tab::
+keyFunc_translate()
+onlySpace:=false
+return
+Space & CapsLock::
+Send {Esc}
+onlySpace:=false
+return
