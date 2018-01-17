@@ -1,4 +1,6 @@
-﻿if not A_IsAdmin
+﻿#NoTrayIcon                 ;无菜单栏图标
+
+if not A_IsAdmin
 {
    Run *RunAs "%A_ScriptFullPath%" 
    ExitApp
@@ -39,6 +41,12 @@ return
 CapsLock & `;::
 SendEvent {Blind}{WheelDown}
 return 
+CapsLock & c:: 
+SendEvent {Blind}{WheelUp}
+return        
+CapsLock & v::
+SendEvent {Blind}{WheelDown}
+return 
 
 CapsLock & F5::
 Reload
@@ -46,16 +54,18 @@ return
 CapsLock & alt::
 Send {Esc}
 return
-CapsLock & tab::
+CapsLock & b::
+Send {Enter}
+return
+CapsLock & t::
 keyFunc_translate()
 return
 
-; 左右删除
-CapsLock & w::
-Send {BS}
+CapsLock & Space::
+    Send {Shift Down}
 return
-CapsLock & r::
-Send {Delete}
+CapsLock & Space up::
+    Send {Shift up}
 return
 
 ; 指针移动
@@ -69,7 +79,7 @@ CapsLock & s::
 Send {Left}
 return
 CapsLock & f::
-Send {right}
+    Send {right}
 return
 
 ; 行首行尾
@@ -81,17 +91,25 @@ Send {end}
 return
 
 ; 单词跳跃
-CapsLock & q::
+CapsLock & w::
 Send ^{left}
 return
-CapsLock & t::
+CapsLock & r::
 Send ^{right}
 return
 
-; 撤销重做
+; 左右删除
 CapsLock & 3::
-Send ^{z}
+Send {BS}
 return
 CapsLock & 4::
+Send {Delete}
+return
+
+; 撤销重做
+CapsLock & 2::
+Send ^{z}
+return
+CapsLock & 5::
 Send ^+{z}
 return

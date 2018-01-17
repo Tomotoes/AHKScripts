@@ -1,4 +1,7 @@
-﻿; Auto-execute section {{{
+﻿#NoTrayIcon                 ;无菜单栏图标
+
+
+; Auto-execute section {{{
 ; About vim_ahk
 VimVersion := "v0.2.0"
 VimDate := "22/Nov/2017"
