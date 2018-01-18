@@ -13,6 +13,25 @@ setTimer, youdaoApiInit, -1
 #NoEnv
 Process Priority,,High
 SetCapsLockState, AlwaysOff  
+
+; CapsLock -> Esc
+CapsLock::
+Send {Esc}
+return
+
+; CapsLock & alt -> Enter
+CapsLock & alt::
+Send {Enter}
+return
+
+; CapsLock & Space -> Shift
+CapsLock & Space::
+    Send {Shift Down}
+return
+CapsLock & Space up::
+    Send {Shift up}
+return
+
 CapsLock & j::
 MouseMove, -15, 0, 0, R                                               
 return  
@@ -41,32 +60,21 @@ return
 CapsLock & `;::
 SendEvent {Blind}{WheelDown}
 return 
-CapsLock & c:: 
+CapsLock & 3:: 
 SendEvent {Blind}{WheelUp}
 return        
-CapsLock & v::
+CapsLock & 4::
 SendEvent {Blind}{WheelDown}
 return 
 
 CapsLock & F5::
 Reload
 return
-CapsLock & alt::
-Send {Esc}
-return
-CapsLock & b::
-Send {Enter}
-return
-CapsLock & t::
+
+CapsLock & c::
 keyFunc_translate()
 return
 
-CapsLock & Space::
-    Send {Shift Down}
-return
-CapsLock & Space up::
-    Send {Shift up}
-return
 
 ; 指针移动
 CapsLock & e::
@@ -90,26 +98,16 @@ CapsLock & g::
 Send {end}
 return
 
-; 单词跳跃
-CapsLock & w::
-Send ^{left}
-return
-CapsLock & r::
-Send ^{right}
-return
 
 ; 左右删除
-CapsLock & 3::
+CapsLock & w::
 Send {BS}
 return
-CapsLock & 4::
+CapsLock & r::
 Send {Delete}
 return
 
 ; 撤销重做
-CapsLock & 2::
+CapsLock & t::
 Send ^{z}
-return
-CapsLock & 5::
-Send ^+{z}
 return

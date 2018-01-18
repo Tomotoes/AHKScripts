@@ -1,6 +1,6 @@
 ﻿#Persistent
 #SingleInstance force
-Menu, Tray, Icon, %A_ScriptDir%\resources\ahk.ico
+Menu, Tray, Icon, %A_ScriptDir%\ahk.ico
 SetWorkingDir %A_ScriptDir%\scripts\
 
 DetectHiddenWindows On  ; 允许探测脚本中隐藏的主窗口。
