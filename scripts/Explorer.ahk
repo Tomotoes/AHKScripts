@@ -17,7 +17,35 @@
 	KeyWait Enter                                   ;|
 	SendEvent {Blind}{RButton up}
 	Send {down 4}{Right}{down 2}{enter}
-	Sleep 500
+	Sleep 800
 	Send {enter}
 	return
+
+	;ctrl + s sublime打开文件
+	^s::
+	SendEvent {Blind}{RButton down}   
+	KeyWait Enter                                   ;|
+	SendEvent {Blind}{RButton up}
+	Sleep 100
+	Send {down 3}{enter}
+	return
+
+	;ctrl + e VsCode打开文件
+	^e::
+	SendEvent {Blind}{RButton down}   
+	KeyWait Enter                                   ;|
+	SendEvent {Blind}{RButton up}
+	Sleep 100
+	Send {down 4}{enter}
+	return
+
+	;ctrl + shift +  e VsCode打开文件夹
+	^+e::
+	SendEvent {Blind}{RButton down}   
+	KeyWait Enter                                   ;|
+	SendEvent {Blind}{RButton up}
+	Sleep 100
+	Send {up 3}{enter}
+	return
+
 }

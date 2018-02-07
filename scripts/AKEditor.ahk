@@ -71,7 +71,7 @@ CapsLock & F5::
 Reload
 return
 
-CapsLock & c::
+CapsLock & tab::
 keyFunc_translate()
 return
 
